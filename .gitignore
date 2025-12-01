@@ -1,2 +1,17 @@
 build/
 dist/
+Output/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+*.spec
+*.exe
+*.dll
+.vscode/
+*.pfx
+*.pem
+*.cer

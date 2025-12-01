@@ -1,0 +1,18 @@
+MiniOffice - Licencia.
+
+Copyright (c) 2025 Alejandro.
+
+Se concede permiso para usar, instalar y ejecutar este software.
+
+Acciones permitidas:
+-Ejecutar libremente el programa.
+-Analizar y revisar su funcionamiento.
+-Distribuir el instalador.
+
+Acciones no permitidas:
+-Utilizar el software con fines comerciales.
+-Modificar el código fuente con intención de redistribuir versiones alternativas.
+-Vender, alquilar sublicenciar el software.
+-Publicarlo en plataformas públicas sin autorización del autor.
+
+Al instalar este software, el usuario acepta esta licencia en su totalidad.
