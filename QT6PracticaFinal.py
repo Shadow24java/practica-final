@@ -3,6 +3,7 @@ from PySide6.QtWidgets import (
     QToolBar, QMenuBar, QStatusBar, QLabel, QFileDialog, QColorDialog, QFontDialog, QMessageBox, QInputDialog,
     QStatusBar, QDockWidget, QLineEdit, QPushButton, QVBoxLayout, QWidget
 )
+from voz import escuchar_comando
 from PySide6.QtGui import QAction, QIcon, QKeySequence, QTextCursor, QTextImageFormat
 from PySide6.QtCore import QSize, Qt
 import sys
@@ -103,6 +104,14 @@ class VentanaPrincipal(QMainWindow):
         accion_reemplazar.triggered.connect(self.reemplazar_texto)
         Search_Replace.addAction(accion_reemplazar)
 
+        # <-- Acción para reconocimiento de voz -->
+        accion_voz = QAction(QIcon.fromTheme("media-record"), "Voz", self)
+        accion_voz.setStatusTip("Escuchar comando de voz")
+        accion_voz.setShortcut(QKeySequence("Ctrl+Alt+V"))
+        accion_voz.triggered.connect(self.ejecutar_comando_por_voz)
+        Editar.addAction(accion_voz)
+
+
         # <-- Acciones para el menu personalizar --> 
         accion_color = QAction("Cambiar color de las letras", self)
         accion_color.triggered.connect(self.cambiar_color_letra)
@@ -134,7 +143,8 @@ class VentanaPrincipal(QMainWindow):
             "cortar": accion_cortar,
             "buscar": accion_buscar,
             "reemplazar": accion_reemplazar,
-            "insertar_imagen": accion_insertar_imagen
+            "insertar_imagen": accion_insertar_imagen,
+            "voz": accion_voz
         }
 
 
@@ -278,6 +288,47 @@ class VentanaPrincipal(QMainWindow):
         ocurrencias = contenido.count(texto)
         self.texto_dock.setPlainText(contenido.replace(texto, nuevo))
         QMessageBox.information(self, "Reemplazar todo", f"Reemplazadas {ocurrencias} ocurrencias.")
+
+    def ejecutar_comando_por_voz(self):
+        comando = escuchar_comando()
+
+        if not comando:
+            self.barra_estado.showMessage("No se ha reconocido ningún comando", 3000)
+            return
+
+        print("Comando reconocido:", comando)
+
+        if "nuevo" in comando:
+            self.acciones["nuevo"].trigger()
+
+        elif "abrir" in comando:
+            self.acciones["abrir"].trigger()
+
+        elif "guardar" in comando:
+            self.acciones["guardar"].trigger()
+
+        elif "buscar" in comando:
+            
+            self.buscar_texto()
+
+        elif "reemplazar" in comando:
+            self.reemplazar_texto()
+
+        elif "insertar imagen" in comando or ("insertar" in comando and "imagen" in comando):
+            self.insertar_imagen()
+
+        elif "color" in comando and "fondo" in comando:
+            self.cambiar_color_fondo()
+
+        elif "color" in comando:
+            self.cambiar_color_letra()
+
+        elif "salir" in comando or "cerrar" in comando:
+            self.close()
+
+        else:
+            self.barra_estado.showMessage(f"Comando no reconocido: {comando}", 3000)
+
 
 
 if __name__ == "__main__":
