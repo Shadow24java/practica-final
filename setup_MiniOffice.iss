@@ -34,7 +34,7 @@ LicenseFile=docs\LICENSE.txt
 ; Remove the following line to run in administrative install mode (install for all users).
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=MiniOffice
+OutputBaseFilename=MiniOfficeInstalador
 SetupIconFile="C:\Users\alejandro\Documents\Dam\DesarrolloDeInterfaces\Tema1\practica final\icon.ico"
 SolidCompression=yes
 WizardStyle=modern dynamic
